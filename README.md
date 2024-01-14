@@ -99,8 +99,8 @@ curl -L 'https://$uri/api/partners/validateCarteFunciara' \
 > | partnerReferenceId      |  required | String   | Partner's unique internal ID of request  |
 > | priority      |  required | String   | "Low" or "High"  |
 > | requestType      |  required | String   | "CARTE_FUNCIARA" or "PLAN_CADASTRAL"  |
-> | judet      |  required | String   | County - From value list  |
-> | uat      |  required | String   | Administrative unit - From value list  |
+> | judet      |  required | String   | County - From value list (Provided by OpenCode)  |
+> | uat      |  required | String   | Administrative unit - From value list (Provided by OpenCode)  |
 > | nrCf      |  required | String   | Carte Funciara  |
 > | nrCad      |  required | String   | Numar Cadastru  |
 > | nrTopo      |  optional | String   | Numar Topografic  |
