@@ -311,3 +311,21 @@ curl -L 'https://$uri/api/partners/queryRequestStatus' \
 > | Finalised | Request is finalised |
 
 </details>
+
+<details>
+ <summary>Validation status "code"</summary>
+ 
+> | Option   |  Description                                                           |
+> |----------|----------------------------------------------------------------|
+> | VALIDATION_SUCCESS      |   |
+> | WARN_NOT_IDENTIFIED |  |
+> | WARN_VALIDATION_FAILED      |  |
+> | WARN_UNKNOWN_ANCPI_RESPONSE |  |
+> | ERR_INVALID_JUDET |  |
+> | ERR_INVALID_UAT |  |
+> | ERR_ANCPI_LOGIN_UNAVAILABLE |  |
+> | ERR_ANCPI_EPAY_CONFIG_UNAVAILABLE |  |
+> | ERR_ANCPI_EPAY_VALIDATE_UNAVAILABLE |  |
+> | ERR_UNKNOWN_VALIDATION_ERROR |  |
+
+</details>
