@@ -4,6 +4,76 @@
 
 ------------------------------------------------------------------------------------------
 
+#### Validate ANCPI Land Registry information
+
+<details>
+ <summary><code>POST</code> <code><b>{uri}/api/partners/validateCarteFunciara</b></code> <code>Validates a combination of nrCf/nrCad/NrTopo against ANCPI electronic database</code></summary>
+
+##### Endpoint
+
+> | Key      | Value               | description                                                           |
+> |-----------|-------------------------|-----------------------------------------------------------------------|
+> | uri      | String  | Provided by OpenCode (STAGING / PROD)  |
+
+
+##### Headers
+
+> | Key      | Value               | description                                                           |
+> |----------|---------------------|-----------------------------------------------------------------------|
+> | Authorization      | Basic Auth   | Provided by OpenCode  |
+> | X-OCD-Partner      | String   | Provided by OpenCode  |
+
+##### Body
+
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | judet      |  required | String   | County - From value list  |
+> | uat      |  required | String   | Administrative unit - From value list  |
+> | nrCf      |  required | String   | Carte Funciara  |
+> | nrCad      |  required | String   | Numar Cadastru  |
+> | nrTopo      |  optional | String   | Numar Topografic  |
+
+###### Example
+```bash
+curl -L 'https://$uri/api/partners/validateCarteFunciara' \
+-u '$user:$password' \
+-H 'X-OCD-Partner: $partnerId' \
+-H 'Content-Type: application/json' \
+-d '{
+    "judet":"Dâmbovița",
+    "uat":"Tartasesti",
+    "nrCf":"1234-C1-U2",
+    "nrCad":"1234-C1-U2"
+}'
+```
+
+##### Responses
+
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `application/json`        | object (JSON)    |
+> | `401`         | `text/html;charset=utf-8`         | None  |
+
+
+##### Response Body
+
+> | name        |   data type  | description                                       |
+> |-------------|--------------|---------------------------------------------------|
+> | status      |   String   | <ul><li>"OK" - combination is valid and found in ANCPI database</li><li>"WARN" - combination not found in ANCPI database</li><li>"ERROR" - error validating combination (see code)</li></ul>  |
+> | code      |   String   | From value list |
+
+###### Example
+```json
+{
+    "status": "OK",
+    "code": "VALIDATION_SUCCESS"
+}
+```
+
+</details>
+
+------------------------------------------------------------------------------------------
+
 #### Create a new request
 
 <details>
@@ -82,7 +152,7 @@ curl -L 'https://$uri/api/partners/submitRequest' \
 #### Cancel request
 
 <details>
- <summary><code>POST</code> <code><b>{uri}/api/partners/cancelRequest</b></code> <code>(cancels a request - only from Created or RetrySendToONRC)</code></summary>
+ <summary><code>POST</code> <code><b>{uri}/api/partners/cancelRequest</b></code> <code>(cancels a request - only from Created or RetrySendToANCPI)</code></summary>
 
 ##### Endpoint
 
@@ -213,146 +283,17 @@ curl -L 'https://$uri/api/partners/queryRequestStatus' \
 
 ------------------------------------------------------------------------------------------
 
-#### Query ONRC status
 
-<details>
- <summary><code>POST</code> <code><b>{uri}/api/partners/queryOnrcStatus</b></code> <code>(query ONRC status)</code></summary>
-
-##### Endpoint
-
-> | Key      | Value               | description                                                           |
-> |-----------|-------------------------|-----------------------------------------------------------------------|
-> | uri      | String  | Provided by OpenCode (STAGING / PROD)  |
-
-
-##### Headers
-
-> | Key      | Value               | description                                                           |
-> |----------|---------------------|-----------------------------------------------------------------------|
-> | Authorization      | Basic Auth   | Provided by OpenCode  |
-> | X-OCD-Partner      | String   | Provided by OpenCode  |
-
-
-###### Example
-```bash
-curl -L 'https://$uri/api/partners/queryOnrcStatus' \
--u '$user:$password' \
--H 'X-OCD-Partner: $partnerId' 
-```
-
-##### Responses
-
-> | http code     | content-type                      | response                                                            |
-> |---------------|-----------------------------------|---------------------------------------------------------------------|
-> | `200`         | `application/json`        | object (JSON)    |
-> | `401`         | `text/html;charset=utf-8`         | None  |
-
-
-##### Response Body
-
-> | name        |   data type  | description                                       |
-> |-------------|--------------|---------------------------------------------------|
-> | isInfoCertActive      |   String   | "true" / "false" string values  |
-
-###### Example
-```json
-{
-"isInfoCertActive": "true"
-}
-```
-
-</details>
-
-------------------------------------------------------------------------------------------
 #### Value Lists
 <details>
- <summary>documentType</summary>
+ <summary>requestType</summary>
  
  ```javascript
- "Furnizare informatii"
- "Certificat constatator de bază"
- "Certificat constatator fonduri IMM"
- "Certificat constatator pentru insolvență"
+ "CARTE_FUNCIARA"
+ "PLAN_CADASTRAL"
  ```
 </details>
 
-<details>
- <summary>documentScope</summary>
- 
- <blockquote>
- 
- <details>
-	 <summary>documentType = <code>"Furnizare informatii"</code></summary>
-  <blockquote>
-  <code>"Informare"</code>
-	</details>
- <details>
-	 <summary>documentType = <code>"Certificat constatator de bază"</code></summary>
-  <blockquote>
-  <code>"Informare"
-"Accesare Fonduri"
-"Accesare Fonduri Europene"
-"Administratia financiara"
-"Administraţia Fondului pentru Mediu"
-"Administrația Finanțelor Publice"
-"Agenţia pentru Finanţarea Investiţiilor Rurale (AFIR)"
-"Agenția de Plăți și Intervenții în Agricultură"
-"Agenția Națională de Administrare Fiscală"
-"Agenția Națională pentru Ocuparea Forței de Muncă"
-"Agenția Națională pentru Protecția Mediului"
-"Agenția Națională pentru Resurse Minerale"
-"Ambasadă"
-"Atestare ANRE"
-"Autoritatea Rutieră Română"
-"Autorizare"
-"Banca Națională a României"
-"Bancă"
-"Birou notar public"
-"Casa Națională de Asigurări de Sănătate"
-"Casa Națională de Pensii"
-"Direcţia Generală a Vămilor"
-"Eliberare cazier judiciar"
-"Fonduri SAPARD"
-"Insolvență"
-"Inspectoratul General pentru Imigrări"
-"Instanță"
-"Leasing"
-"Licitație"
-"Ministerul Economiei, Energiei și Mediului de Afaceri"
-"Ministerul Muncii și Justiţiei Sociale"
-"Obținere viză"
-"Oficiul de Cadastru și Publicitate Imobiliară"
-"Parchet"
-"Poliție"
-"Primãrie"
-"PSIPAN"
-"Registrul Auto Român"
-"Registrul Operatorilor Intracomunitari"
-"Înregistrare în scopuri de TVA"</code>
-	</details>
- <details>
-	 <summary>documentType = <code>"Certificat constatator fonduri IMM"</code></summary>
-  <blockquote>
-  <code>"Accesare Fonduri"
-"Accesare Fonduri Europene"
-"Agenţia pentru Finanţarea Investiţiilor Rurale (AFIR)"
-"Agenția de Plăți și Intervenții în Agricultură"
-"Fonduri IMM"
-"Fonduri SAPARD"
-"MINIMIS"
-"Ministerul Economiei, Energiei și Mediului de Afaceri"
-"Ministerul Muncii și Justiţiei Sociale"
-"Primãrie"</code>
-	</details>
- <details>
-	 <summary>documentType = <code>"Certificat constatator pentru insolvență"</code></summary>
-  <blockquote>
-<code>"Birou notar public"
-"Licitație"
-"Procedura de insolventa"
-"Tribunal"</code>
-	</details>
-</details>
 <details>
  <summary>requestStatus</summary>
  
@@ -360,13 +301,13 @@ curl -L 'https://$uri/api/partners/queryOnrcStatus' \
 > |----------|----------------------------------------------------------------|
 > | Created      | Request received and loaded to backend systems  |
 > | Cancelled | Request cancelled by partner |
-> | SendingToONRC      | In progress - RPA create ONRC request |
-> | RetrySendToONRC | Postponed - RPA create ONRC request |
-> | SentToONRC | Request is sent to ONRC and waiting for document |
-> | DownloadONRC | In progress - check ONRC for document generation |
-> | RetryDownloadONRC | Postponed - check ONRC for document generation |
-> | DoneONRC | Document is generated and available |
-> | InvoiceGeneratedONRC | ONRC invoice is generated and available |
+> | SendingToANCPI      | In progress - API create ANCPI request |
+> | RetrySendToANCPI | Postponed - API create ANCPI request |
+> | SentToANCPI | Request is sent to ANCPI and waiting for document |
+> | DownloadANCPI | In progress - check ANCPI for document generation |
+> | RetryDownloadANCPI | Postponed - check ANCPI for document generation |
+> | DoneANCPI | Document is generated and available |
+> | InvoiceGeneratedANCPI | ANCPI invoice is generated and available |
 > | Finalised | Request is finalised |
 
 </details>
