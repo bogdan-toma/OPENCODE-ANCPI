@@ -194,20 +194,18 @@ curl -L 'https://$uri/api/partners/queryRequestStatus' \
 
 > | name        |   data type  | description                                       |
 > |-------------|--------------|---------------------------------------------------|
-> | partnerRef      |   String   | Partner's unique internal ID of request  |
+> | partnerReferenceId      |   String   | Partner's unique internal ID of request  |
 > | requestStatus      |   String   | Request Status  |
-> | onrcPortalNo | String | ONRC Portal Number |
-> | docUri      |   String   | Direct download URI for generated document (present only if generated)  |
-> | onrcInvoiceUri | String | Direct download URI for ONRC invoice (only for partners with self-invoice |
+> | ancpiOrderId | String | ANCPI Order ID |
+> | docUri      |   Array [ String ]   | Direct download URIs for generated documents (present only if generated)  |
 
 ###### Example
 ```json
 {
 "partnerRef":  "d5f3af8e",
 "requestStatus":  "Finalised",
-"onrcPortalNo": "856012",
-"docUri":  "https://storage.googleapis.com/download/storage/v1/b/certificatconstatator-dev.appspot.com/o/_data1_portal_ccfil_certificate_2023_3_6_certificat0000-0000Q.pdf?generation=1678138325733513&alt=media",
-"onrcInvoiceUri":  "https://storage.googleapis.com/download/storage/v1/b/certificatconstatator-dev.appspot.com/o/_data1_portal_ccfil_certificate_2023_3_6_certificat0000-0000Q.pdf?generation=1678138325733513&alt=media"
+"ancpiOrderId": "5950496",
+"docUri":  ["https://storage.googleapis.com/download/storage/v1/b/certificatconstatator-dev.appspot.com/o/_data1_portal_ccfil_certificate_2023_3_6_certificat0000-0000Q.pdf?generation=1678138325733513&alt=media"]
 }
 ```
 
