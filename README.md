@@ -1,6 +1,6 @@
 
 
-## ANCPI ePay integration API - by OpenCode S.R.L.
+## ANCPI ePay integration API
 
 ------------------------------------------------------------------------------------------
 
